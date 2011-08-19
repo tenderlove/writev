@@ -1,7 +1,10 @@
-History.txt
+.autotest
+CHANGELOG.rdoc
 Manifest.txt
-README.txt
+README.rdoc
 Rakefile
-bin/writev
+bench.rb
+ext/writev/extconf.rb
+ext/writev/writev.c
 lib/writev.rb
 test/test_writev.rb
