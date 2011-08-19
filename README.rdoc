@@ -1,26 +1,30 @@
 = writev
 
-* FIX (url)
+* http://github.com/tenderlove/writev
 
 == DESCRIPTION:
 
-FIX (describe your package)
+This gem adds the `writev` method to IO.  It provides access to the `writev`
+system call on your IO objects.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* Currently only works on SUS systems and Ruby 1.9
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+    file = Tempfile.new('foo')
+    file.writev %w{ hello world }
+    assert_equal 'helloworld', File.read(file.path)
+    file.unlink
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* Ruby 1.9
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* gem install writev
 
 == LICENSE:
 
