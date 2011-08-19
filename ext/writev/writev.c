@@ -2,6 +2,8 @@
 #include <ruby/io.h>
 #include <sys/uio.h>
 
+VALUE rb_IOV_MAX;
+
 static VALUE
 rb_io_check_io(VALUE io)
 {
@@ -18,7 +20,11 @@ static VALUE rb_writev(VALUE io, VALUE list)
     ssize_t written;
     VALUE tmp;
 
+#ifdef IOV_MAX
     if(RARRAY_LEN(list) > IOV_MAX)
+#else
+    if(RARRAY_LEN(list) > NUM2INT(rb_IOV_MAX))
+#endif
 	rb_raise(rb_eArgError, "list is too long");
 
     tmp = rb_io_check_io(io);
@@ -33,7 +39,7 @@ static VALUE rb_writev(VALUE io, VALUE list)
 	iov[i].iov_len = RSTRING_LEN(string);
     }
 
-    if((written = writev(fptr->fd, iov, RARRAY_LEN(list))) == -1)
+    if((written = writev(fptr->fd, iov, (int)RARRAY_LEN(list))) == -1)
 	rb_sys_fail_path(fptr->pathv);
 
     return LONG2FIX(written);
@@ -42,7 +48,13 @@ static VALUE rb_writev(VALUE io, VALUE list)
 void Init_writev()
 {
     rb_define_method(rb_cIO, "writev", rb_writev, 1);
+#ifdef IOV_MAX
+    rb_IOV_MAX = INT2NUM(IOV_MAX);
     rb_define_const(rb_cIO, "IOV_MAX", INT2NUM(IOV_MAX));
+#else
+    rb_IOV_MAX = INT2NUM(sysconf(_SC_IOV_MAX));
+    rb_define_const(rb_cIO, "IOV_MAX", rb_IOV_MAX);
+#endif
 }
 
 /* vim: set noet sws=4 sw=4: */
