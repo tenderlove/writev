@@ -50,11 +50,10 @@ void Init_writev()
     rb_define_method(rb_cIO, "writev", rb_writev, 1);
 #ifdef IOV_MAX
     rb_IOV_MAX = INT2NUM(IOV_MAX);
-    rb_define_const(rb_cIO, "IOV_MAX", INT2NUM(IOV_MAX));
 #else
     rb_IOV_MAX = INT2NUM(sysconf(_SC_IOV_MAX));
-    rb_define_const(rb_cIO, "IOV_MAX", rb_IOV_MAX);
 #endif
+    rb_define_const(rb_cIO, "IOV_MAX", rb_IOV_MAX);
 }
 
 /* vim: set noet sws=4 sw=4: */
