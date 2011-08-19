@@ -18,6 +18,9 @@ static VALUE rb_writev(VALUE io, VALUE list)
     ssize_t written;
     VALUE tmp;
 
+    if(RARRAY_LEN(list) > IOV_MAX)
+	rb_raise(rb_eArgError, "list is too long");
+
     tmp = rb_io_check_io(io);
     GetOpenFile(tmp, fptr);
     rb_io_check_writable(fptr);
@@ -39,6 +42,7 @@ static VALUE rb_writev(VALUE io, VALUE list)
 void Init_writev()
 {
     rb_define_method(rb_cIO, "writev", rb_writev, 1);
+    rb_define_const(rb_cIO, "IOV_MAX", INT2NUM(IOV_MAX));
 }
 
 /* vim: set noet sws=4 sw=4: */

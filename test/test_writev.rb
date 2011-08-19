@@ -25,6 +25,13 @@ class TestWritev < MiniTest::Unit::TestCase
       end
     end
   end
+
+  def test_list_too_long
+    file = Tempfile.new('foo')
+    assert_raises(ArgumentError) do
+      file.writev %w{ x } * (IO::IOV_MAX + 1)
+    end
+  end
 end
 
 # /* vim: set et sws=2 sw=2: */
