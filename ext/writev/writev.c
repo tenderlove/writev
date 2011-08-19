@@ -42,6 +42,8 @@ static VALUE rb_writev(VALUE io, VALUE list)
     if((written = writev(fptr->fd, iov, (int)RARRAY_LEN(list))) == -1)
 	rb_sys_fail_path(fptr->pathv);
 
+    xfree(iov);
+
     return LONG2FIX(written);
 }
 
