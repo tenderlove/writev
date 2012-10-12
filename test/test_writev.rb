@@ -11,6 +11,15 @@ class TestWritev < MiniTest::Unit::TestCase
     file.unlink
   end
 
+  def test_checks_arguments
+    file = Tempfile.new('foo')
+
+    assert_raises TypeError do
+      file.writev('hello')
+    end
+    file.unlink
+  end
+
   def test_length
     file = Tempfile.new('foo')
 

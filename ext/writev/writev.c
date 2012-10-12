@@ -20,6 +20,7 @@ static VALUE rb_writev(VALUE io, VALUE list)
     ssize_t written;
     VALUE tmp;
 
+    Check_Type(list, T_ARRAY);
 #ifdef IOV_MAX
     if(RARRAY_LEN(list) > IOV_MAX)
 #else
