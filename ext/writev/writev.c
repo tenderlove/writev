@@ -4,11 +4,13 @@
 
 VALUE rb_IOV_MAX;
 
+#ifndef HAVE_RB_IO_CHECK_IO
 static VALUE
 rb_io_check_io(VALUE io)
 {
     return rb_check_convert_type(io, T_FILE, "IO", "to_io");
 }
+#endif
 
 #define rb_sys_fail_path(path) rb_sys_fail(NIL_P(path) ? 0 : RSTRING_PTR(path))
 
