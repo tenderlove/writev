@@ -42,8 +42,10 @@ static VALUE rb_writev(VALUE io, VALUE list)
 	iov[i].iov_len = RSTRING_LEN(string);
     }
 
-    if((written = writev(fptr->fd, iov, (int)RARRAY_LEN(list))) == -1)
+    if((written = writev(fptr->fd, iov, (int)RARRAY_LEN(list))) == -1) {
+	xfree(iov);
 	rb_sys_fail_path(fptr->pathv);
+    }
 
     xfree(iov);
 

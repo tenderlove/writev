@@ -1,3 +1,8 @@
+Thu Oct 11 18:51:14 2012  Aaron Patterson <aaron@tenderlovemaking.com>
+
+	* ext/writev/writev.c: fix memory leak when writes fail.
+	* README.rdoc: updated the documentation
+
 Thu Oct 11 18:45:15 2012  Aaron Patterson <aaron@tenderlovemaking.com>
 
 	* ext/writev/extconf.rb: check for rb_io_check_io

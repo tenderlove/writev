@@ -10,7 +10,6 @@ system call on your IO objects.
 == FEATURES/PROBLEMS:
 
 * Currently only works on SUS systems and Ruby 1.9
-* Can leak memory if an exception is raised during write.
 
 == SYNOPSIS:
 
